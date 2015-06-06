@@ -28,6 +28,8 @@
 python << EOS
 
 # import of required modules {{{
+from __future__ import print_function
+
 import re
 import sys
 import time
@@ -633,7 +635,7 @@ def findTag(bufferNumber, changedTick):
         # }}}
 
         # spit out the error {{{
-	print "ERROR: %s %s %s:%u" % (ec.__name__, ei, tb.tb_frame.f_code.co_filename, tb.tb_lineno,)
+	print("ERROR: %s %s %s:%u" % (ec.__name__, ei, tb.tb_frame.f_code.co_filename, tb.tb_lineno))
 	time.sleep(0.5)
         # }}}
     # }}}
