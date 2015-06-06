@@ -24,7 +24,7 @@
 "    to recompile it with --with-pythoninterp option to the configure script
 " 2. Copy script pythonhelper.vim to the $HOME/.vim/plugin directory
 " 3. Run Vim and open any python file.
-" 
+"
 python << EOS
 
 # import of required modules {{{
@@ -52,7 +52,7 @@ class PythonTag(object):
 
 
     # STATIC VARIABLES {{{
-    
+
     # possible tag types {{{
     TT_CLASS                    = 0
     TT_METHOD                   = 1
@@ -71,13 +71,13 @@ class PythonTag(object):
 
 
     # METHODS {{{
-    
+
     def __init__(self, type, name, fullName, lineNumber, indentLevel):
         # DOC {{{
         """Initializes instances of PythonTag().
 
         Parameters
-            
+
             type -- tag type
 
             name -- short tag name
@@ -118,9 +118,9 @@ class PythonTag(object):
 
     # }}}
 # }}}
-        
 
-# class SimplePythonTagsParser() {{{ 
+
+# class SimplePythonTagsParser() {{{
 class SimplePythonTagsParser(object):
     # DOC {{{
     """Provides a simple python tag parser.
@@ -143,7 +143,7 @@ class SimplePythonTagsParser(object):
 
 
     # METHODS {{{
-    
+
     def __init__(self, source):
         # DOC {{{
         """Initializes instances of SimplePythonTagsParser().
@@ -161,12 +161,12 @@ class SimplePythonTagsParser(object):
             (callable(source.readline) == 0)):
             raise AttributeError("Source must have callable readline method.")
         # }}}
-                
+
         # remember what the source is
         self.source = source
         # }}}
 
-    
+
     def getTags(self):
         # DOC {{{
         """Determines all the tags for the buffer. Returns a tuple in format
@@ -184,7 +184,7 @@ class SimplePythonTagsParser(object):
         tagsStack       = []
         lineNumber      = 0
         # }}}
-        
+
         # go through all the lines in the source and localize all python tags in it {{{
         while 1:
             # get next line
@@ -253,7 +253,7 @@ class SimplePythonTagsParser(object):
         else:
             parentTag = None
         # }}}
-         
+
         # return the tag
         return parentTag
         # }}}
@@ -369,7 +369,7 @@ class SimplePythonTagsParser(object):
         tag) for functions/methods.
 
         Parameters
-        
+
             parentTagType -- type of the enclosing/parent tag
         """
         # }}}
@@ -438,7 +438,7 @@ class VimReadlineBuffer(object):
         return "%s\n" % (self.vimBuffer[self.currentLine],)
         # }}}
 
-    
+
     # }}}
 # }}}
 
@@ -606,7 +606,7 @@ def findTag(bufferNumber, changedTick):
 	else:
 	    nearestLineNumber = -1
 	# }}}
-	 
+
 	# describe the cursor position (what tag the cursor is on) {{{
         # reset the description
 	tagDescription = ""
@@ -653,7 +653,7 @@ def deleteTags(bufferNumber):
     # CODE {{{
     # define global variables
     global TAGS, TAGLINENUMBERS, BUFFERTICKS
-    
+
     # try to delete the tags for the buffer {{{
     try:
         del TAGS[bufferNumber]
@@ -676,7 +676,7 @@ function! PHCursorHold()
 	return
     endif
     " }}}
-    
+
     " call python function findTag() with the current buffer number and changed ticks
     execute 'python findTag(' . expand("<abuf>") . ', ' . b:changedtick . ')'
 endfunction
@@ -685,7 +685,7 @@ endfunction
 function! PHBufferDelete()
     " set PHStatusLine for this window to empty string
     let w:PHStatusLine = ""
-    
+
     " call python function deleteTags() with the cur
     execute 'python deleteTags(' . expand("<abuf>") . ')'
 endfunction
