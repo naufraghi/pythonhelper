@@ -452,9 +452,9 @@ def getNearestLineIndex(row, tagLineNumbers):
 
     Parameters
 
-	row -- current cursor row
+        row -- current cursor row
 
-	tagLineNumbers -- list of tags' line numbers (ie. their position)
+        tagLineNumbers -- list of tags' line numbers (ie. their position)
     """
     # }}}
 
@@ -466,16 +466,16 @@ def getNearestLineIndex(row, tagLineNumbers):
 
     # go through all tag line numbers and find the one nearest to the specified row {{{
     for lineIndex, lineNumber in enumerate(tagLineNumbers):
-	# if the current line is nearer the current cursor position, take it {{{
-	if (nearestLineNumber < lineNumber <= row):
-	    nearestLineNumber   = lineNumber
+        # if the current line is nearer the current cursor position, take it {{{
+        if (nearestLineNumber < lineNumber <= row):
+            nearestLineNumber   = lineNumber
             nearestLineIndex    = lineIndex
-	# }}}
+        # }}}
 
-	# if we've got past the current cursor position, let's end the search {{{
-	if (lineNumber >= row):
-	    break
-	# }}}
+        # if we've got past the current cursor position, let's end the search {{{
+        if (lineNumber >= row):
+            break
+        # }}}
     # }}}
 
     # return index of the line with the nearest tag
@@ -490,10 +490,10 @@ def getTags(bufferNumber, changedTick):
 
     Parameters
 
-	bufferNumber -- number of the current buffer
+        bufferNumber -- number of the current buffer
 
-	changedTick -- ever increasing number used to tell if the buffer has
-	    been modified since the last time
+        changedTick -- ever increasing number used to tell if the buffer has
+            been modified since the last time
     """
     # }}}
 
@@ -503,7 +503,7 @@ def getTags(bufferNumber, changedTick):
 
     # return immediately if there's no need to update the tags {{{
     if (BUFFERTICKS.get(bufferNumber, None) == changedTick):
-	return (TAGLINENUMBERS[bufferNumber], TAGS[bufferNumber],)
+        return (TAGLINENUMBERS[bufferNumber], TAGS[bufferNumber],)
     # }}}
 
     # get the tags {{{
@@ -528,32 +528,32 @@ def findTag(bufferNumber, changedTick):
 
     Parameters
 
-	bufferNumber -- number of the current buffer
+        bufferNumber -- number of the current buffer
 
-	changedTick -- ever increasing number used to tell if the buffer has
-	    been modified since the last time
+        changedTick -- ever increasing number used to tell if the buffer has
+            been modified since the last time
     """
     # }}}
 
     # CODE {{{
     # try to find the best tag {{{
     try:
-	# get the tags data for the current buffer
-	tagLineNumbers, tags = getTags(bufferNumber, changedTick)
+        # get the tags data for the current buffer
+        tagLineNumbers, tags = getTags(bufferNumber, changedTick)
 
-	# link to vim's internal data {{{
-	currentBuffer = vim.current.buffer
-	currentWindow = vim.current.window
-	row, col = currentWindow.cursor
-	# }}}
+        # link to vim's internal data {{{
+        currentBuffer = vim.current.buffer
+        currentWindow = vim.current.window
+        row, col = currentWindow.cursor
+        # }}}
 
-	# get the index of the nearest line
-	nearestLineIndex = getNearestLineIndex(row, tagLineNumbers)
+        # get the index of the nearest line
+        nearestLineIndex = getNearestLineIndex(row, tagLineNumbers)
 
-	# if any line was found, try to find if the tag is appropriate {{{
-	# (ie. the cursor can be below the last tag but on a code that has nothing
-	# to do with the tag, because it's indented differently, in such case no
-	# appropriate tag has been found.)
+        # if any line was found, try to find if the tag is appropriate {{{
+        # (ie. the cursor can be below the last tag but on a code that has nothing
+        # to do with the tag, because it's indented differently, in such case no
+        # appropriate tag has been found.)
         while (nearestLineIndex > -1):
             # get the line number of the nearest tag
             nearestLineNumber = tagLineNumbers[nearestLineIndex]
@@ -602,41 +602,41 @@ def findTag(bufferNumber, changedTick):
             # the tag is appropriate, so use it {{{
             else:
                 break
-	    # }}}
+            # }}}
         # }}}
         # no appropriate tag has been found {{{
-	else:
-	    nearestLineNumber = -1
-	# }}}
+        else:
+            nearestLineNumber = -1
+        # }}}
 
-	# describe the cursor position (what tag the cursor is on) {{{
+        # describe the cursor position (what tag the cursor is on) {{{
         # reset the description
-	tagDescription = ""
+        tagDescription = ""
 
         # if an appropriate tag has been found, set the description accordingly {{{
-	if (nearestLineNumber > -1):
-	    tagInfo = tags[nearestLineNumber]
-	    tagDescription = "[in %s (%s)]" % (tagInfo.fullName, PythonTag.TAG_TYPE_NAME[tagInfo.type],)
-	# }}}
-	# }}}
+        if (nearestLineNumber > -1):
+            tagInfo = tags[nearestLineNumber]
+            tagDescription = "[in %s (%s)]" % (tagInfo.fullName, PythonTag.TAG_TYPE_NAME[tagInfo.type],)
+        # }}}
+        # }}}
 
-	# update the variable for the status line so it get updated with the new description
-	vim.command("let w:PHStatusLine=\"%s\"" % (tagDescription,))
+        # update the variable for the status line so it get updated with the new description
+        vim.command("let w:PHStatusLine=\"%s\"" % (tagDescription,))
     # }}}
 
     # handle possible exceptions {{{
     except Exception:
         # bury into the traceback {{{
-	ec, ei, tb = sys.exc_info()
-	while (tb != None):
-	    if (tb.tb_next == None):
-		break
-	    tb = tb.tb_next
+        ec, ei, tb = sys.exc_info()
+        while (tb != None):
+            if (tb.tb_next == None):
+                break
+            tb = tb.tb_next
         # }}}
 
         # spit out the error {{{
-	print("ERROR: %s %s %s:%u" % (ec.__name__, ei, tb.tb_frame.f_code.co_filename, tb.tb_lineno))
-	time.sleep(0.5)
+        print("ERROR: %s %s %s:%u" % (ec.__name__, ei, tb.tb_frame.f_code.co_filename, tb.tb_lineno))
+        time.sleep(0.5)
         # }}}
     # }}}
     # }}}
@@ -674,8 +674,8 @@ EOS
 function! PHCursorHold()
     " only python is supported {{{
     if (!exists('b:current_syntax') || (b:current_syntax != 'python'))
-	let w:PHStatusLine = ''
-	return
+        let w:PHStatusLine = ''
+        return
     endif
     " }}}
 
