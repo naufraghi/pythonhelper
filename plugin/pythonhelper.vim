@@ -25,7 +25,6 @@
 " 2. Copy script pythonhelper.vim to the $HOME/.vim/plugin directory
 " 3. Run Vim and open any python file.
 "
-
 python3 << EOS
 
 # import of required modules
@@ -573,11 +572,11 @@ autocmd BufDelete * silent call PHBufferDelete()
 set updatetime=1000
 
 " color of the current tag in the status line (bold cyan on black)
-highlight User1 gui=bold guifg=cyan guibg=black
+"highlight User1 gui=bold guifg=cyan guibg=black
 " color of the modified flag in the status line (bold black on red)
-highlight User2 gui=bold guifg=black guibg=red
+"highlight User2 gui=bold guifg=black guibg=red
 " the status line will be displayed for every window
-set laststatus=2
+"set laststatus=2
 " set the status line to display some useful information
-set stl=%-f%r\ %2*%m%*\ \ \ \ %1*%{TagInStatusLine()}%*%=[%l:%c]\ \ \ \ [buf\ %n]
+"set stl=%-f%r\ %2*%m%*\ \ \ \ %1*%{TagInStatusLine()}%*%=[%l:%c]\ \ \ \ [buf\ %n]
 
